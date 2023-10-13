@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:preferences_app/screens/Providers/theme_provider.dart';
 import 'package:preferences_app/screens/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../shared_preferences/prferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -11,10 +15,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isDark = false;
-  int gender = 1;
-  String name = 'Jhosep';
-
+  // bool isDark = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,29 +33,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const Divider(),
             SwitchListTile.adaptive(
-              value: isDark,
+              value: Preferences.isDark,
               title: const Text('Dark Mode'),
               onChanged: (value) {
-                isDark = value;
+                Preferences.isDark = value;
+
+                final themeProvider = context.read<ThemeProvider>();
+                value
+                    ? themeProvider.setDarkMode()
+                    : themeProvider.setLightMode();
                 setState(() {});
               },
             ),
             const Divider(),
             RadioListTile<int>(
               value: 1,
-              groupValue: gender,
+              groupValue: Preferences.gender,
               title: const Text('Masculino'),
               onChanged: (value) {
-                gender = value ?? 1;
+                Preferences.gender = value ?? 1;
                 setState(() {});
               },
             ),
             RadioListTile<int>(
               value: 2,
-              groupValue: gender,
+              groupValue: Preferences.gender,
               title: const Text('Femenino'),
               onChanged: (value) {
-                gender = value ?? 2;
+                Preferences.gender = value ?? 2;
                 setState(() {});
               },
             ),
@@ -65,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               child: TextFormField(
                 onChanged: (value) {
-                  name = value;
+                  Preferences.name = value;
                   setState(() {});
                 },
                 decoration: const InputDecoration(

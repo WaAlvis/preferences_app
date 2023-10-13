@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:preferences_app/screens/widgets/widgets.dart';
+import 'package:preferences_app/shared_preferences/prferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static const String routeName = 'home';
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +14,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home '),
       ),
-      body: const Center(
+      body:  Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('IsDarkMode:'),
+            Text('IsDarkMode: ${Preferences.isDark}'),
             Divider(),
-            Text('Nombre de usuario:'),
+            Text('Nombre de usuario: ${Preferences.name}'),
             Divider(),
-            Text('Genero:'),
+            Text('Genero: ${Preferences.gender}'),
             Divider(),
           ],
         ),
